@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Price Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Car Price Prediction</h1>
+        <p style="text-align:center; font-size: 14px; color: #666;">
+    This prediction model was made by <strong>Rachit Agrawal</strong>
+</p>
+
+        <form action="/predict" method="post">
+            <label>Company:</label>
+            <select name="company" id="company" required onchange="filterCarModels()">
+                {% for company in companies %}
+                    <option value="{{ company }}">{{ company }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Car Model:</label>
+            <select name="car_models" id="car_models" required>
+                {% for model in car_models %}
+                    <option value="{{ model }}">{{ model }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Year:</label>
+            <select name="year" required>
+                {% for y in years %}
+                    <option value="{{ y }}">{{ y }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Fuel Type:</label>
+            <select name="fuel_type" required>
+                {% for fuel in fuel_types %}
+                    <option value="{{ fuel }}">{{ fuel }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Kilometers Driven:</label>
+            <input type="number" name="kilo_driven" required>
+
+            <button type="submit">Predict Price</button>
+        </form>
+
+        {% if prediction_text %}
+            <h2>{{ prediction_text }}</h2>
+        {% endif %}
+    </div>
+
+    <script>
+        const carModels = {{ car_models | tojson | safe }};
+
+        function filterCarModels() {
+            const company = document.getElementById("company").value;
+            const modelDropdown = document.getElementById("car_models");
+            modelDropdown.innerHTML = '';
+
+            const filtered = carModels.filter(model => model.toLowerCase().includes(company.toLowerCase()));
+            for (let model of filtered) {
+                const option = document.createElement("option");
+                option.value = model;
+                option.textContent = model;
+                modelDropdown.appendChild(option);
+            }
+        }
+    </script>
+</body>
+</html>
