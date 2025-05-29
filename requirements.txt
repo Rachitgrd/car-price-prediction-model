@@ -1,24 +1,14 @@
-Flask
-Flask-CORS
-Flask-Login
-Flask-Migrate
-Flask-SQLAlchemy
-SQLAlchemy
-
-gunicorn  # For running the app in production (optional)
-
-requests
-pandas
 numpy
+pandas
 matplotlib
+seaborn
 scikit-learn
-opencv-python  # Only if using image processing
-
-Jinja2
-Werkzeug
-itsdangerous
-
-# For development and notebooks
-ipython
-jupyterlab
-notebook
+joblib
+xgboost
+lightgbm
+catboost
+tqdm
+plotly
+flask
+streamlit
+jupyter
